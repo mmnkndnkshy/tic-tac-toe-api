@@ -9,6 +9,12 @@ public class Game {
     private Player currentPlayer = Player.X;
     private GameStatus gameStatus = GameStatus.IN_PROGRESS;
 
+    private static final int[][] WINNING_PATTERNS = {
+            {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // rows
+            {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // columns
+            {0, 4, 8}, {2, 4, 6}              // diagonals
+    };
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -42,24 +48,19 @@ public class Game {
 
     private boolean hasWon(Player player) {
 
-        return check(0, 1, 2, player) ||
-                check(3, 4, 5, player) ||
-                check(6, 7, 8, player) ||
+        for (int[] pattern : WINNING_PATTERNS) {
+            if (isWinningPattern(pattern, player)) {
+                return true;
+            }
+        }
 
-                //Column
-                check(0, 3, 6, player) ||
-                check(1, 4, 7, player) ||
-                check(2, 5, 8, player) ||
-
-                //Diagonal
-                check(0, 4, 8, player) ||
-                check(2, 4, 6, player);
+        return false;
     }
 
-    private boolean check(int a, int b, int c, Player player) {
-        return player.equals(board.get(a)) &&
-                player.equals(board.get(b)) &&
-                player.equals(board.get(c));
+    private boolean isWinningPattern(int[] pattern, Player player) {
+        return player.equals(board.get(pattern[0])) &&
+                player.equals(board.get(pattern[1])) &&
+                player.equals(board.get(pattern[2]));
     }
 
     private void validatePosition(int position) {
