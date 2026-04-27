@@ -13,6 +13,6 @@ public class GameTest {
     void shouldCreateNewGameAndReturnCurrentPlayerAsX() {
         Game game = new Game();
 
-        assertThat(game.getCurrentPlayer()).isEqualTo("X");
+        assertThat(game.getCurrentPlayer()).isEqualTo(Player.X);
     }
 }
