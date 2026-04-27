@@ -126,4 +126,29 @@ class MoveControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("X_WINS"));
     }
+
+    @Test
+    @DisplayName("should declare X as winner for diagonal (0,4,8)")
+    void shouldDeclareXWinnerForDiagonalLeftToRight() throws Exception {
+        Game game = new Game();
+        given(gameService.getGame("game-1")).willReturn(game);
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                .param("position", "0"));
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                .param("position", "1"));
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                .param("position", "4"));
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                .param("position", "2"));
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                        .param("position", "8"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("X_WINS"));
+
+    }
 }

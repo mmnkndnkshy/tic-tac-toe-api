@@ -46,9 +46,14 @@ public class Game {
                 check(3, 4, 5, player) ||
                 check(6, 7, 8, player) ||
 
+                //Column
                 check(0, 3, 6, player) ||
                 check(1, 4, 7, player) ||
-                check(2, 5, 8, player);
+                check(2, 5, 8, player) ||
+
+                //Diagonal
+                check(0, 4, 8, player) ||
+                check(2, 4, 6, player);
     }
 
     private boolean check(int a, int b, int c, Player player) {
