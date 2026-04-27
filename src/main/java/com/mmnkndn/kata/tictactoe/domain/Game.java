@@ -17,8 +17,20 @@ public class Game {
     }
 
     public void makeMove(int position) {
+        validatePosition(position);
+
+        if (board.containsKey(position)) {
+            throw new IllegalArgumentException("Position already occupied");
+        }
+
         board.put(position, currentPlayer);
         switchPlayer();
+    }
+
+    private void validatePosition(int position) {
+        if (position < 0 || position > 8) {
+            throw new IllegalArgumentException("Invalid board position");
+        }
     }
 
     private void switchPlayer() {

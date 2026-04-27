@@ -45,16 +45,36 @@ class MoveControllerTest {
 
         given(gameService.getGame("game-1")).willReturn(game);
 
-        // First move
         mockMvc.perform(post("/games/{gameId}/moves", "game-1")
                         .param("position", "0"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.board.0").value("X"));
 
-        // Second move
         mockMvc.perform(post("/games/{gameId}/moves", "game-1")
                         .param("position", "1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.board.1").value("O")); // THIS SHOULD PASS
+                .andExpect(jsonPath("$.board.1").value("O"));
+    }
+
+    @Test
+    @DisplayName("should not allow player to move to an occupied position")
+    void shouldNotAllowMoveToOccupiedPosition() throws Exception {
+
+        Game game = new Game();
+
+        given(gameService.getGame("game-1")).willReturn(game);
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                        .param("position", "0"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                        .param("position", "1"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                        .param("position", "1"))
+                .andExpect(status().isBadRequest());
+
     }
 }
