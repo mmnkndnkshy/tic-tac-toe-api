@@ -1,0 +1,27 @@
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+### Maven ###
+target/
+.mvn/
+mvnw
+mvnw.cmd
+
+### Spring Boot ###
+*.log
+logs/
+
+### OS Files ###
+.DS_Store
+Thumbs.db
+
+### Env Files ###
+.env
+.env.*
+
+### Generated / Temporary ###
+dependency-reduced-pom.xml
