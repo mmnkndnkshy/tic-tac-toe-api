@@ -102,4 +102,28 @@ class MoveControllerTest {
                 .andExpect(jsonPath("$.status").value("X_WINS"));
 
     }
+
+    @Test
+    @DisplayName("should declare player X as winner when left column is filled")
+    void shouldDeclareXWinnerForLeftColumn() throws Exception {
+        Game game = new Game();
+        given(gameService.getGame("game-1")).willReturn(game);
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                .param("position", "0"));
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                .param("position", "1"));
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                .param("position", "3"));
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                .param("position", "2"));
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                        .param("position", "6"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("X_WINS"));
+    }
 }

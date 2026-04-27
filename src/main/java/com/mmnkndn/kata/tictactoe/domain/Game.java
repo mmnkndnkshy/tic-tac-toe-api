@@ -44,7 +44,11 @@ public class Game {
 
         return check(0, 1, 2, player) ||
                 check(3, 4, 5, player) ||
-                check(6, 7, 8, player);
+                check(6, 7, 8, player) ||
+
+                check(0, 3, 6, player) ||
+                check(1, 4, 7, player) ||
+                check(2, 5, 8, player);
     }
 
     private boolean check(int a, int b, int c, Player player) {
