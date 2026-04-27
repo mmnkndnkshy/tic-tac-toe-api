@@ -28,6 +28,11 @@ public class Game {
     }
 
     public void makeMove(int position) {
+
+        if (gameStatus != GameStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Game already finished");
+        }
+
         validatePosition(position);
 
         if (board.containsKey(position)) {
@@ -40,6 +45,11 @@ public class Game {
             gameStatus = (currentPlayer == Player.X)
                     ? GameStatus.X_WINS
                     : GameStatus.O_WINS;
+            return;
+        }
+
+        if (isDraw()) {
+            gameStatus = GameStatus.DRAW;
             return;
         }
 
@@ -61,6 +71,10 @@ public class Game {
         return player.equals(board.get(pattern[0])) &&
                 player.equals(board.get(pattern[1])) &&
                 player.equals(board.get(pattern[2]));
+    }
+
+    private boolean isDraw() {
+        return board.size() == 9 && gameStatus == GameStatus.IN_PROGRESS;
     }
 
     private void validatePosition(int position) {

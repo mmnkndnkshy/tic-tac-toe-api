@@ -151,4 +151,26 @@ class MoveControllerTest {
                 .andExpect(jsonPath("$.status").value("X_WINS"));
 
     }
+
+    @Test
+    @DisplayName("should declare game as DRAW when board is full without winner")
+    void shouldDeclareDrawWhenBoardIsFull() throws Exception {
+
+        Game game = new Game();
+        given(gameService.getGame("game-1")).willReturn(game);
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1").param("position", "0")); // X
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1").param("position", "1")); // O
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1").param("position", "2")); // X
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1").param("position", "4")); // O
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1").param("position", "3")); // X
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1").param("position", "5")); // O
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1").param("position", "7")); // X
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1").param("position", "6")); // O
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1").param("position", "8")); // X
+
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                        .param("position", "8"))
+                .andExpect(status().isBadRequest());
+    }
 }
