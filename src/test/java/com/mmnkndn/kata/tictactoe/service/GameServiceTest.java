@@ -1,6 +1,7 @@
 package com.mmnkndn.kata.tictactoe.service;
 
 import com.mmnkndn.kata.tictactoe.domain.Game;
+import com.mmnkndn.kata.tictactoe.repository.GameRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,8 @@ class GameServiceTest {
     @Test
     @DisplayName("should create a new game with player X")
     void shouldCreateNewGameWithPlayerX() {
-        GameService gameService = new GameServiceImpl();
+        GameRepository gameRepository = new GameRepository();
+        GameService gameService = new GameServiceImpl(gameRepository);
 
         Game game = gameService.createGame();
 
