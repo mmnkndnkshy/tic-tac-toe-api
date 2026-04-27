@@ -27,7 +27,9 @@ class MoveControllerTest {
     @DisplayName("should allow player X to place a mark at position 0")
     void shouldAllowPlayerXToPlaceMarkAtPosition0() throws Exception {
 
-        given(gameService.getGame("game-1")).willReturn(new Game());
+        Game game = new Game();
+
+        given(gameService.getGame("game-1")).willReturn(game);
 
         mockMvc.perform(post("/games/{gameId}/moves", "game-1")
                         .param("position", "0"))
@@ -37,15 +39,22 @@ class MoveControllerTest {
 
     @Test
     @DisplayName("should allow multiple moves in same game and persist state")
-    void shouldPersistGameAcrossMoves() throws Exception {
+    void shouldSwitchPlayerFromXToOAfterFirstMove() throws Exception {
 
-        String gameId = "game-1";
+        Game game = new Game();
 
-        given(gameService.getGame(gameId)).willReturn(new Game());
+        given(gameService.getGame("game-1")).willReturn(game);
 
-        mockMvc.perform(post("/games/{gameId}/moves", gameId)
+        // First move
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
                         .param("position", "0"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.board.0").value("X"));
+
+        // Second move
+        mockMvc.perform(post("/games/{gameId}/moves", "game-1")
+                        .param("position", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.board.1").value("O")); // THIS SHOULD PASS
     }
 }
