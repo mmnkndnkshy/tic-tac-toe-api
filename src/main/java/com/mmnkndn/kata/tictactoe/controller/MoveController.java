@@ -27,4 +27,5 @@ class MoveController {
 
         return ResponseEntity.ok(Map.of("board", game.getBoard() ,"status", game.getGameStatus()));
     }
+
 }

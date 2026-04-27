@@ -1,5 +1,9 @@
 package com.mmnkndn.kata.tictactoe.domain;
 
+import com.mmnkndn.kata.tictactoe.exception.GameAlreadyFinishedException;
+import com.mmnkndn.kata.tictactoe.exception.InvalidPositionException;
+import com.mmnkndn.kata.tictactoe.exception.PositionAlreadyOccupiedException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,13 +34,13 @@ public class Game {
     public void makeMove(int position) {
 
         if (gameStatus != GameStatus.IN_PROGRESS) {
-            throw new IllegalStateException("Game already finished");
+            throw new GameAlreadyFinishedException();
         }
 
         validatePosition(position);
 
         if (board.containsKey(position)) {
-            throw new IllegalArgumentException("Position already occupied");
+            throw new PositionAlreadyOccupiedException();
         }
 
         board.put(position, currentPlayer);
@@ -79,7 +83,7 @@ public class Game {
 
     private void validatePosition(int position) {
         if (position < 0 || position > 8) {
-            throw new IllegalArgumentException("Invalid board position");
+            throw new InvalidPositionException();
         }
     }
 
