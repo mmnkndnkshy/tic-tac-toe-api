@@ -24,4 +24,5 @@ class GameDrawTest {
 
         assertThat(game.getGameStatus()).isEqualTo(GameStatus.DRAW);
     }
+
 }

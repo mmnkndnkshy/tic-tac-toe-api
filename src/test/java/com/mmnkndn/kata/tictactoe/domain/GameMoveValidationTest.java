@@ -1,5 +1,7 @@
 package com.mmnkndn.kata.tictactoe.domain;
 
+import com.mmnkndn.kata.tictactoe.exception.InvalidPositionException;
+import com.mmnkndn.kata.tictactoe.exception.PositionAlreadyOccupiedException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +17,7 @@ public class GameMoveValidationTest {
 
       game.makeMove(0);
 
-      assertThrows(IllegalArgumentException.class, () -> game.makeMove(0));
+      assertThrows(PositionAlreadyOccupiedException.class, () -> game.makeMove(0));
 
     }
 
@@ -25,7 +27,7 @@ public class GameMoveValidationTest {
 
       Game game = new Game();
 
-      assertThrows(IllegalArgumentException.class, () -> game.makeMove(-1));
+      assertThrows(InvalidPositionException.class, () -> game.makeMove(-1));
 
     }
 
@@ -35,7 +37,7 @@ public class GameMoveValidationTest {
 
       Game game = new Game();
 
-      assertThrows(IllegalArgumentException.class, () -> game.makeMove(9));
+      assertThrows(InvalidPositionException.class, () -> game.makeMove(9));
 
     }
 }
