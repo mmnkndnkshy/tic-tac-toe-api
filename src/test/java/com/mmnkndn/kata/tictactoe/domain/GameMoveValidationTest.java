@@ -10,34 +10,34 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class GameMoveValidationTest {
 
     @Test
-    @DisplayName("Should reject move to an occupied position")
-    void shouldRejectOccupiedPosition(){
-
-      Game game = new Game();
-
-      game.makeMove(0);
-
-      assertThrows(PositionAlreadyOccupiedException.class, () -> game.makeMove(0));
-
-    }
-
-    @Test
     @DisplayName("Should reject move to an invalid negative position")
-    void shouldRejectInvalidLowPosition(){
+    void shouldRejectInvalidLowPosition() {
 
-      Game game = new Game();
+        Game game = new Game();
 
-      assertThrows(InvalidPositionException.class, () -> game.makeMove(-1));
+        assertThrows(InvalidPositionException.class, () -> game.makeMove(-1));
 
     }
 
     @Test
     @DisplayName("Should reject move to an invalid high position")
-    void shouldRejectMoveToInvalidHighPosition(){
+    void shouldRejectMoveToInvalidHighPosition() {
 
-      Game game = new Game();
+        Game game = new Game();
 
-      assertThrows(InvalidPositionException.class, () -> game.makeMove(9));
+        assertThrows(InvalidPositionException.class, () -> game.makeMove(9));
+
+    }
+
+    @Test
+    @DisplayName("Should reject move to an occupied position")
+    void shouldRejectOccupiedPosition() {
+
+        Game game = new Game();
+
+        game.makeMove(0);
+
+        assertThrows(PositionAlreadyOccupiedException.class, () -> game.makeMove(0));
 
     }
 }

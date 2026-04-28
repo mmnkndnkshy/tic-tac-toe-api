@@ -9,7 +9,7 @@ public class GameTurnTest {
 
     @Test
     @DisplayName("Should switch from player X to player O after a turn")
-    void shouldSwitchFromXToO(){
+    void shouldSwitchFromXToO() {
         Game game = new Game();
 
         game.makeMove(0);
@@ -20,7 +20,7 @@ public class GameTurnTest {
 
     @Test
     @DisplayName("Should switch from player O to player X after a turn")
-    void shouldSwitchFromOToX(){
+    void shouldSwitchFromOToX() {
         Game game = new Game();
 
         game.makeMove(0);
