@@ -1,22 +1,18 @@
 package com.mmnkndn.kata.tictactoe.exception;
 
+import com.mmnkndn.kata.tictactoe.api.dto.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(GameException.class)
-    public ResponseEntity<?> handleGameException(GameException ex) {
-
-        return ResponseEntity.badRequest().body(
-                Map.of(
-                        "error", ex.getErrorCode(),
-                        "message", ex.getMessage()
-                )
-        );
+    public ResponseEntity<ErrorResponse> handleGameException(GameException ex) {
+        return ResponseEntity.badRequest()
+                .body(new ErrorResponse()
+                        .error(ex.getErrorCode())
+                        .message(ex.getMessage()));
     }
 }

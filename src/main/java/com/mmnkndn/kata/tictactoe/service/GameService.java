@@ -1,10 +1,12 @@
 package com.mmnkndn.kata.tictactoe.service;
 
 import com.mmnkndn.kata.tictactoe.domain.Game;
+import com.mmnkndn.kata.tictactoe.domain.GameCreated;
 
 public interface GameService {
 
-    Game createGame();
+
+    GameCreated createGame();
 
     Game getGame(String gameId);
 
