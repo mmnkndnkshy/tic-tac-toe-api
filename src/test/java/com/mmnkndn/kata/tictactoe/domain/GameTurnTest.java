@@ -8,6 +8,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GameTurnTest {
 
     @Test
+    @DisplayName("X should play first move")
+    void shouldStartWithX() {
+        Game game = new Game();
+
+        assertThat(game.getCurrentPlayer()).isEqualTo(Player.X);
+    }
+
+    @Test
     @DisplayName("Should switch from player X to player O after a turn")
     void shouldSwitchFromXToO() {
         Game game = new Game();

@@ -8,8 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GameDrawTest {
 
     @Test
-    @DisplayName("Should declare draw when board is completely filled without winner")
-    void shouldDeclareDrawWhenBoardIsFull() {
+    @DisplayName("should declare draw when board is full with no winner")
+    void shouldDeclareDraw() {
         Game game = new Game();
 
         game.makeMove(0);

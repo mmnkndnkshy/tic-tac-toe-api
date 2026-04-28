@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class GameWinTest {
 
     @Test
-    @DisplayName("Should declare X as winner for top row")
-    void shouldDeclareXWinnerForTopRow() {
+    @DisplayName("X should win via top row")
+    void shouldDeclareXWinRow() {
         Game game = new Game();
 
         game.makeMove(0); // X
@@ -25,8 +25,8 @@ public class GameWinTest {
     }
 
     @Test
-    @DisplayName("Should declare X as winner for left column")
-    void shouldDeclareXWinnerForLeftColumn() {
+    @DisplayName("X should win via column")
+    void shouldDeclareXWinColumn() {
         Game game = new Game();
 
         game.makeMove(0); // X
@@ -39,8 +39,8 @@ public class GameWinTest {
     }
 
     @Test
-    @DisplayName("Should declare X as winner for diagonal left to right")
-    void shouldDeclareXWinnerForDiagonalLeftToRight() {
+    @DisplayName("X should win via diagonal")
+    void shouldDeclareXWinDiagonal() {
         Game game = new Game();
 
         game.makeMove(0); // X
@@ -53,8 +53,8 @@ public class GameWinTest {
     }
 
     @Test
-    @DisplayName("Should declare O as winner for top row")
-    void shouldDeclareOWinnerForTopRow() {
+    @DisplayName("O should win via row")
+    void shouldDeclareOWinRow() {
         Game game = new Game();
 
         game.makeMove(0); // X
@@ -68,8 +68,8 @@ public class GameWinTest {
     }
 
     @Test
-    @DisplayName("Should declare O winner for left column")
-    void shouldDeclareOWinnerForColumn() {
+    @DisplayName("O should win via column")
+    void shouldDeclareOWinColumn() {
         Game game = new Game();
 
         game.makeMove(1); // X
@@ -83,8 +83,8 @@ public class GameWinTest {
     }
 
     @Test
-    @DisplayName("Should declare O winner in diagonal")
-    void shouldDeclareOWinnerDiagonal() {
+    @DisplayName("O should win via diagonal")
+    void shouldDeclareOWinDiagonal() {
         Game game = new Game();
 
         game.makeMove(0); // X
