@@ -1,12 +1,15 @@
 package com.mmnkndn.kata.tictactoe.service;
 
 import com.mmnkndn.kata.tictactoe.domain.Game;
-import com.mmnkndn.kata.tictactoe.domain.GameCreated;
+import com.mmnkndn.kata.tictactoe.domain.GameFactory;
+import com.mmnkndn.kata.tictactoe.domain.GameSession;
 import com.mmnkndn.kata.tictactoe.domain.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GameServiceTest {
 
@@ -14,12 +17,19 @@ class GameServiceTest {
     @DisplayName("Should create a new game with player X")
     void shouldCreateNewGameWithPlayerX() {
 
-        GameService gameService = new GameServiceImpl();
+        GameFactory gameFactory = mock(GameFactory.class);
+        Game game = mock(Game.class);
 
-        GameCreated created = gameService.createGame();
+        when(gameFactory.create()).thenReturn(game);
+        when(game.getCurrentPlayer()).thenReturn(Player.X);
 
-        Game game = created.game();
+        GameService gameService = new GameServiceImpl(gameFactory);
 
-        assertThat(game.getCurrentPlayer()).isEqualTo(Player.X);
+        GameSession gameSession = gameService.createGame();
+
+        assertThat(gameSession).isNotNull();
+        assertThat(gameSession.game()).isEqualTo(game);
+        assertThat(gameSession.game().getCurrentPlayer()).isEqualTo(Player.X);
+        assertThat(gameSession.gameId()).isNotBlank();
     }
 }

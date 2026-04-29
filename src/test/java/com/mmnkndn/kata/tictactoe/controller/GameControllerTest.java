@@ -1,7 +1,10 @@
 package com.mmnkndn.kata.tictactoe.controller;
 
 import com.mmnkndn.kata.tictactoe.domain.Game;
-import com.mmnkndn.kata.tictactoe.domain.GameCreated;
+import com.mmnkndn.kata.tictactoe.domain.GameSession;
+import com.mmnkndn.kata.tictactoe.domain.GameStatusEvaluator;
+import com.mmnkndn.kata.tictactoe.domain.MoveValidator;
+import com.mmnkndn.kata.tictactoe.exception.GameErrorCode;
 import com.mmnkndn.kata.tictactoe.service.GameService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,8 +31,8 @@ public class GameControllerTest {
     @DisplayName("Should create a new game and return player X")
     void shouldCreateGame() throws Exception {
 
-        Game game = new Game();
-        GameCreated gameCreated = new GameCreated("game-1", game);
+        Game game = new Game(new MoveValidator(), new GameStatusEvaluator());
+        GameSession gameCreated = new GameSession("game-1", game);
 
         when(gameService.createGame()).thenReturn(gameCreated);
 
@@ -43,7 +46,7 @@ public class GameControllerTest {
     @Test
     @DisplayName("Should make a move and return updated board")
     void shouldMakeMove() throws Exception {
-        Game game = new Game();
+        Game game = new Game(new MoveValidator(), new GameStatusEvaluator());
 
         when(gameService.getGame("game-1")).thenReturn(game);
 
@@ -57,7 +60,7 @@ public class GameControllerTest {
     @Test
     @DisplayName("Should return bad request when position is already occupied")
     void shouldReturnErrorForOccupiedPosition() throws Exception {
-        Game game = new Game();
+        Game game = new Game(new MoveValidator(), new GameStatusEvaluator());
         game.makeMove(0);
 
         when(gameService.getGame("game-1")).thenReturn(game);
@@ -65,7 +68,8 @@ public class GameControllerTest {
         mockMvc.perform(post("/games/game-1/moves")
                         .param("position", "0"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Position already occupied"))
-                .andExpect(jsonPath("$.error").value("POSITION_ALREADY_OCCUPIED"));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(GameErrorCode.POSITION_ALREADY_OCCUPIED.getMessage()))
+                .andExpect(jsonPath("$.error").value(GameErrorCode.POSITION_ALREADY_OCCUPIED.getCode()));
     }
 }

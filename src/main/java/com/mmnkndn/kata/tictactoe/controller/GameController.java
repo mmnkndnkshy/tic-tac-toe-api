@@ -4,8 +4,9 @@ import com.mmnkndn.kata.tictactoe.api.GameApi;
 import com.mmnkndn.kata.tictactoe.api.dto.GameResponse;
 import com.mmnkndn.kata.tictactoe.api.dto.MoveResponse;
 import com.mmnkndn.kata.tictactoe.domain.Game;
-import com.mmnkndn.kata.tictactoe.domain.GameCreated;
+import com.mmnkndn.kata.tictactoe.domain.GameSession;
 import com.mmnkndn.kata.tictactoe.service.GameService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,25 +15,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 public class GameController implements GameApi {
 
     private final GameService gameService;
 
-    public GameController(GameService gameService) {
-        this.gameService = gameService;
-    }
-
-
     @Override
     public ResponseEntity<GameResponse> createGame() {
 
-        GameCreated created = gameService.createGame();
+        GameSession gameSession = gameService.createGame();
 
         return ResponseEntity
-                .created(URI.create("/games/" + created.gameId()))
+                .created(URI.create("/games/" + gameSession.gameId()))
                 .body(new GameResponse(
-                        created.gameId(),
-                        created.game().getCurrentPlayer().name()
+                        gameSession.gameId(),
+                        gameSession.game().getCurrentPlayer().name()
                 ));
     }
 
