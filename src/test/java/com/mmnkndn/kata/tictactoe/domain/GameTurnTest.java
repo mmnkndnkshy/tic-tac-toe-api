@@ -7,10 +7,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameTurnTest {
 
+    private final GameFactory gameFactory = new GameFactory(
+            new MoveValidator(),
+            new GameStatusEvaluator()
+    );
+
     @Test
     @DisplayName("X should play first move")
     void shouldStartWithX() {
-        Game game = new Game();
+        Game game = gameFactory.create();
 
         assertThat(game.getCurrentPlayer()).isEqualTo(Player.X);
     }
@@ -18,7 +23,7 @@ public class GameTurnTest {
     @Test
     @DisplayName("Should switch from player X to player O after a turn")
     void shouldSwitchFromXToO() {
-        Game game = new Game();
+        Game game = gameFactory.create();
 
         game.makeMove(0);
 
@@ -29,7 +34,7 @@ public class GameTurnTest {
     @Test
     @DisplayName("Should switch from player O to player X after a turn")
     void shouldSwitchFromOToX() {
-        Game game = new Game();
+        Game game = gameFactory.create();
 
         game.makeMove(0);
         game.makeMove(1);

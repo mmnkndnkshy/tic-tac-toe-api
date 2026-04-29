@@ -7,10 +7,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class GameDrawTest {
 
+    private final GameFactory gameFactory = new GameFactory(
+            new MoveValidator(),
+            new GameStatusEvaluator()
+    );
+
     @Test
     @DisplayName("should declare draw when board is full with no winner")
     void shouldDeclareDraw() {
-        Game game = new Game();
+        Game game = gameFactory.create();
 
         game.makeMove(0);
         game.makeMove(1);
