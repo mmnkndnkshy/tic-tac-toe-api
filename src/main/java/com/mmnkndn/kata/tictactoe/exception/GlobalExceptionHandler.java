@@ -10,9 +10,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(GameException.class)
     public ResponseEntity<ErrorResponse> handleGameException(GameException ex) {
-        return ResponseEntity.badRequest()
-                .body(new ErrorResponse()
-                        .error(ex.getErrorCode())
-                        .message(ex.getMessage()));
+
+        return ResponseEntity.badRequest().body(
+                new ErrorResponse()
+                        .message(ex.getMessage())
+                        .error(ex.getErrorCode().getCode())
+        );
     }
 }
