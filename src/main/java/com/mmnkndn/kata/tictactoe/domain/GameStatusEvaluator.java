@@ -1,9 +1,12 @@
 package com.mmnkndn.kata.tictactoe.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+@Component
 public class GameStatusEvaluator {
 
     private static final int BOARD_SIZE = 9;
